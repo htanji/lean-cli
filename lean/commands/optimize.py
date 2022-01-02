@@ -204,6 +204,15 @@ def optimize(project: Path,
               type="bind",
               read_only=True)
     )
+    cache = algorithm_file.parent / "cache" 
+    if not cache.exists():
+        cache.mkdir(parents=True)
+    run_options["mounts"].append(
+        Mount(target="/Lean/Launcher/bin/Debug/cache",
+              source=str(cache),
+              type="bind",
+              read_only=False)
+    )
 
     container.update_manager().pull_docker_image_if_necessary(engine_image, update)
 
