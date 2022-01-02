@@ -132,6 +132,16 @@ class LeanRunner:
 
         run_options["commands"].append("exec dotnet QuantConnect.Lean.Launcher.dll")
 
+        cache = algorithm_file.parent / "cache"
+        if not cache.exists():
+            cache.mkdir(parents=True)
+        run_options["mounts"].append(
+            Mount(target="/Lean/Launcher/bin/Debug/cache",
+                  source=str(cache),
+                  type="bind",
+                  read_only=False)
+        )
+
         # Copy the project's code to the output directory
         self._project_manager.copy_code(algorithm_file.parent, output_dir / "code")
 
