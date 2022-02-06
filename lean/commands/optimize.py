@@ -69,6 +69,8 @@ from lean.models.optimizer import OptimizationTarget
               is_flag=True,
               default=False,
               help="Pull the LEAN engine image before running the optimizer")
+@click.option("--maximum-concurrent-backtests",
+              type=int)
 def optimize(project: Path,
              output: Optional[Path],
              detach: bool,
@@ -171,6 +173,8 @@ def optimize(project: Path,
 
     config["optimizer-close-automatically"] = True
     config["results-destination-folder"] = "/Results"
+
+    #config["maximum-concurrent-backtests"] = 10
 
     config_path = output / "optimizer-config.json"
     config_path.parent.mkdir(parents=True, exist_ok=True)

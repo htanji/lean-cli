@@ -134,6 +134,10 @@ def main() -> None:
             logger.error(f"Error: {exception}")
             logger.error("It looks like you don't have an internet connection, please check your system settings")
         else:
+            print("Exception in user code:")
+            print("-"*60)
+            traceback.print_exc(file=sys.stdout)
+            print("-"*60)
             logger.error(f"Error: {exception}")
 
         temp_manager = container.temp_manager()
